@@ -5,14 +5,15 @@ from flaskr import db
 import requests
 from werkzeug.exceptions import abort
 from flaskr import app
-from flaskr.models import User, Post
+from flaskr.models import User, TodoPost
+from flaskr.forms import RegistrationForm, LoginForm
 
 # Setup a blueprint
 bp = Blueprint('blog', __name__)
 
 @app.route('/')
 def index():
-    posts = Post.query.filter().all()
+    todo_posts = TodoPost.query.filter().all()
     # Api weather call
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=4af6fc5e2329133614788c5eb616f87d'
     city = 'Las Vegas' # Las Vegas
@@ -23,7 +24,7 @@ def index():
         'description': response['weather'][0]['description'],
         'icon' : response['weather'][0]['icon'],
     }
-    return render_template('blog/index.html', posts=posts, weather=weather)
+    return render_template('/index.html', posts=todo_posts, weather=weather)
 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
@@ -48,50 +49,12 @@ def create():
 
     return render_template('blog/create.html')
 
-def get_post(id, check_author=True):
-    post = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' WHERE p.id = ?',
-        (id,)
-    ).fetchone()
+@app.route("/register")
+def register():
+    form = RegistrationForm()
+    return render_template('register.html', title='Register', form=form)
 
-    if post is None:
-        abort(404, "Post id {0} doesn't exist.".format(id))
-
-    if check_author and post['author_id'] != g.user['id']:
-        abort(403)
-
-    return post
-
-@app.route('/<int:id>/update', methods=('GET', 'POST'))
-def update(id):
-    post = get_post(id)
-
-    if request.method == 'POST':
-        title = request.form['title']
-        body = request.form['body']
-        error = None
-
-        if not title:
-            error = 'Title is required.'
-
-        if error is not None:
-            flash(error)
-        else:
-            db.execute(
-                'UPDATE post SET title = ?, body = ?'
-                ' WHERE id = ?',
-                (title, body, id)
-            )
-            db.commit()
-            return redirect(url_for('blog.index'))
-
-    return render_template('blog/update.html', post=post)
-
-@app.route('/<int:id>/delete', methods=('POST',))
-def delete(id):
-    get_post(id)
-    db.execute('DELETE FROM post WHERE id = ?', (id,))
-    db.commit()
-    return redirect(url_for('blog.index'))
+@app.route("/login")
+def login():
+    form = LoginForm()
+    return render_template('register.html', title='Login', form=form)
