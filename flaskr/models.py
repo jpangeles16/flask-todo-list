@@ -4,7 +4,8 @@ from datetime import datetime
 
 class User(db.Model):
     """
-    Each user will have a unique username
+    Each user will have a unique username.
+    Their password must be run through a hash to have their data be encrypted.
     """
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
