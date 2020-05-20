@@ -13,20 +13,16 @@ bp = Blueprint('blog', __name__)
 @app.route('/')
 def index():
     posts = Post.query.filter().all()
-
     # Api weather call
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=4af6fc5e2329133614788c5eb616f87d'
     city = 'Las Vegas' # Las Vegas
-
     response = requests.get(url.format(city)).json()
-
     weather = {
         'city': city,
         'temperature': response['main']['temp'],
         'description': response['weather'][0]['description'],
         'icon' : response['weather'][0]['icon'],
     }
-
     return render_template('blog/index.html', posts=posts, weather=weather)
 
 @app.route('/create', methods=('GET', 'POST'))
