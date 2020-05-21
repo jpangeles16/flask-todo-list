@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, g, redirect, render_template, request, url_for, flash
 )
 from flaskr import db
 import requests
@@ -24,7 +24,7 @@ def index():
         'description': response['weather'][0]['description'],
         'icon' : response['weather'][0]['icon'],
     }
-    return render_template('/index.html', posts=todo_posts, weather=weather)
+    return render_template('/index.html', posts=todo_posts)
 
 @app.route('/create', methods=('GET', 'POST'))
 def create():
@@ -49,9 +49,12 @@ def create():
 
     return render_template('blog/create.html')
 
-@app.route("/register")
+@app.route("/register", methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account created for {form.username.data}!', 'success')
+        return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
 @app.route("/login")
