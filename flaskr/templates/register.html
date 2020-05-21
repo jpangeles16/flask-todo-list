@@ -9,54 +9,54 @@
                 <div class="form-group">
                     {{ form.username.label(class="form-control-label") }}
 
-                    {{ if form.username.errors }}
-                        {{ form.username(class="form-control-lg is-invalid") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for errors in form.username.errors %}
-                                <span>{{error}}</span>
+                                <span>{{errors}}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.username(class="form-control-lg") }}
+                        {{ form.username(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.email.label(class="form-control-label") }}
-                    {{ if form.email.errors }}
-                        {{ form.email(class="form-control-lg is-invalid") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for errors in form.email.errors %}
-                                <span>{{error}}</span>
+                                <span>{{errors}}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.email(class="form-control-lg") }}
+                        {{ form.email(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.password.label(class="form-control-label") }}
-                    {{ if form.password.errors }}
-                        {{ form.password(class="form-control-lg is-invalid") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for errors in form.password.errors %}
-                                <span>{{error}}</span>
+                                <span>{{errors}}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.password(class="form-control-lg") }}
+                        {{ form.password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
                     {{ form.confirm_password.label(class="form-control-label") }}
-                    {{ if form.confirm_password.errors }}
-                        {{ form.confirm_password(class="form-control-lg is-invalid") }}
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
                         <div class="invalid-feedback">
                             {% for errors in form.confirm_password.errors %}
-                                <span>{{error}}</span>
+                                <span>{{errors}}</span>
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.confirm_password(class="form-control-lg") }}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
             </fieldset>
