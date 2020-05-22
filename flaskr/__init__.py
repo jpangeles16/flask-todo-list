@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 # For now I'm just gonna create a class model
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_mapping(
@@ -11,6 +12,7 @@ app.config.from_mapping(
 )
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
 
 # Now make sure to import all of the routes here to prevent circular imports!
 from flaskr import routes

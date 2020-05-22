@@ -6,6 +6,7 @@ import requests
 from flaskr import app
 from flaskr.models import User, TodoPost
 from flaskr.forms import RegistrationForm, LoginForm
+from flask_login import login_user
 
 # Setup a blueprint
 bp = Blueprint('blog', __name__)
@@ -65,8 +66,12 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.username.data == 'john' and form.password.data == 'password':
-            flash('You have been logged in!', 'success')
+        # Check if there are any emails with the same email the we've submitted
+        user = User.query.filter_by(username=form.username.data).first()
+        # If user exists and password is correct
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            flash(f'Hi there, {form.username.data}!', 'success')
             return redirect(url_for('index'))
         else:
             flash("Incorrect username or password", 'danger')
