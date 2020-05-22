@@ -1,9 +1,8 @@
 from flask import (
     Blueprint, g, redirect, render_template, request, url_for, flash
 )
-from flaskr import db
+from flaskr import db, bcrypt
 import requests
-from werkzeug.exceptions import abort
 from flaskr import app
 from flaskr.models import User, TodoPost
 from flaskr.forms import RegistrationForm, LoginForm
@@ -11,7 +10,8 @@ from flaskr.forms import RegistrationForm, LoginForm
 # Setup a blueprint
 bp = Blueprint('blog', __name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
 def index():
     todo_posts = TodoPost.query.filter().all()
     # Api weather call
@@ -53,11 +53,21 @@ def create():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
         flash(f'Account created for {form.username.data}!', 'success')
         return redirect(url_for('index'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    return render_template('register.html', title='Login', form=form)
+    if form.validate_on_submit():
+        if form.username.data == 'john' and form.password.data == 'password':
+            flash('You have been logged in!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash("Incorrect username or password", 'danger')
+    return render_template('login.html', title='Login', form=form)
