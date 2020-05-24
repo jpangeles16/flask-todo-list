@@ -9,6 +9,32 @@
     <title></title>
 </head>
 <body>
+    <nav>
+        <div class="logo">
+            <h4>Nav</h4>
+        </div>
+        <ul>
+            <li>
+                <a href="#">Item</a>
+            </li>
+            <li>
+                <a href="#">Item</a>
+            </li>
+            <li>
+                <a href="#">Item</a>
+            </li>
+            <li>
+                <a href="#">Item</a>
+             </li>
+        </ul>
+    </nav>
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('account') }}">Account</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        Hello, {{ current_user.username }}
+    {% else %}
+        <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
