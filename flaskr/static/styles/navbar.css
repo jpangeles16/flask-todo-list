@@ -1,0 +1,118 @@
+/* Credits to this tutorial: https://www.youtube.com/watch?v=gXkqy0b4M5g by Dev Ed */
+
+nav {
+    background: lightgray;
+    display: flex;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+    justify-content: space-around;
+    min-height: 8vh;
+    background-color: #efb806;
+    font-family: 'Poppins', sans-serif;
+}
+
+.logo {
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 40%;
+}
+
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    color: black;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+#burger {
+    display: none;
+}
+
+#burger div {
+    width: 25px;
+    height: 3px;
+    background-color: black;
+    margin: 3px;
+}
+
+
+@media screen and (max-width: 1024px) {
+    .nav-links {
+        display: flex;
+        justify-content: space-around;
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    body {
+        overflow-x: hidden;
+    }
+    /*This is for the nav-links to appear on the right side of the screen*/
+    #custom_nav .nav-links {
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #efb806;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        /*transition: transform 0.5s ease-in;*/
+    }
+
+    #custom_nav .nav-links li {
+        opacity: 0;
+    }
+
+    #burger {
+        display: block;
+        cursor: pointer;
+    }
+}
+
+#custom_nav .nav-active {
+    transform: translateX(0%);
+}
+
+@keyframes navLinkFade {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+/*Some more burger effects*/
+
+.toggle .line1 {
+    transform: rotate(-45deg) translate(-5px, 4px);
+}
+
+.toggle .line2 {
+    opacity: 0;
+}
+
+.toggle .line3 {
+    transform: rotate(45deg) translate(-5px, -4px);
+}
