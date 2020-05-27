@@ -1,0 +1,14 @@
+.post {
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 1px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+}
+
+.post * {
+
+}
+

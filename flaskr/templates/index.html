@@ -1,9 +1,13 @@
 {% extends 'base.html' %}`
 {% block content %}
     {% for post in posts %}
-        <h1>{{ post.title }}</h1>
-        <p>By {{ post.author.username }} on {{ post.date_posted.strftime('%m/%d/%Y, %H:%M:%S') }}</p>
-        <p>{{ post.content }}</p>
-        <h5><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h5>
+        <div class="post">
+            <h1>{{ post.title }}</h1>
+            <p>By {{ post.author.username }} on {{ post.date_posted.strftime('%m/%d/%Y, %H:%M:%S') }}</p>
+{#            <p>{{ post.content }}</p>#}
+            {% if current_user.is_authenticated %}
+                <h5><a class="article-title" href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></h5>
+            {% endif %}
+        </div>
     {% endfor %}
 {% endblock content %}
