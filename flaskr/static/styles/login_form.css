@@ -1,0 +1,12 @@
+#loginform {
+    display: flex;
+    flex-direction: column;
+}
+
+#loginform * {
+    margin: 20px;
+}
+
+.form-check {
+    height: 31px;
+}

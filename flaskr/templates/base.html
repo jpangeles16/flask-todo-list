@@ -9,6 +9,7 @@
 {#    Custom CSS     #}
     <link rel="stylesheet" type="text/css" href="../static/styles/navbar.css">
     <link rel="stylesheet" type="text/css" href="../static/styles/todo_post.css">
+    <link rel="stylesheet" type="text/css" href="../static/styles/login_form.css">
     <title></title>
     <script type="text/javascript" src="../static/app/navbar.js"></script>
 </head>
@@ -19,17 +20,20 @@
         </div>
         <ul class="nav-links">
             <li>
-                <a href="#">Item</a>
+                <a href="{{ url_for("index") }}">Home</a>
             </li>
-            <li>
-                <a href="#">Item</a>
-            </li>
-            <li>
-                <a href="#">Item</a>
-            </li>
-            <li>
-                <a href="#">Item</a>
-             </li>
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for("account") }}">Account</a>
+                </li>
+            {% endif %}
+            {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('logout') }}">Logout</a>
+                </li>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
         </ul>
         <div id="burger">
             <div class="line1"></div>
@@ -37,13 +41,6 @@
             <div class="line3"></div>
         </div>
     </nav>
-    {% if current_user.is_authenticated %}
-        <a href="{{ url_for('account') }}">Account</a>
-        <a href="{{ url_for('logout') }}">Logout</a>
-        Hello, {{ current_user.username }}
-    {% else %}
-        <a href="{{ url_for('login') }}">Login</a>
-    {% endif %}
     <div class="container">
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
