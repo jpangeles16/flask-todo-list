@@ -8,5 +8,15 @@
 }
 
 .form-check {
-    height: 31px;
+    display:flex;
+    flex-direction: row;
+}
+
+.form-check-input {
+    position: relative;
+}
+
+.checkbox {
+    position: relative;
+    top: 6px;
 }
